@@ -26,8 +26,6 @@ import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.integration.annotation.Transformer;
 
 import java.util.Collections;
-import java.util.Map;
-
 /**
  * @author David Turanski
  **/
@@ -41,16 +39,9 @@ public class FileTaskLaunchRequestTransformer {
 	@Transformer(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)
 	public SimpleTaskLaunchRequest supplyFileName(String payload) {
 
-		return new SimpleTaskLaunchRequest
-				(properties.getTaskName(), properties.getArgs(), Collections.singletonMap
-						("fileName",
-						payload));
+		return new SimpleTaskLaunchRequest(properties.getTaskName(), properties.getArgs(),
+				 Collections.singletonMap(
+						 String.join(".","app",properties.getTaskName(),"fileName"),
+						 payload));
 	}
-
-	@Transformer(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)
-	public SimpleTaskLaunchRequest supplyProperties(Map<String,String> payload) {
-		return new SimpleTaskLaunchRequest
-				(properties.getTaskName(), properties.getArgs(),payload);
-	}
-
 }
