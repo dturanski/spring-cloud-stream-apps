@@ -10,18 +10,17 @@ public class TaskLauncherProperties {
 	/**
 	 * The URI for the dataflow server that will receive task launch requests. Default is http://localhost:9393;
 	 */
-	private URI dataflowServerUri;
+	private String dataflowServerUri = "http://localhost:9393";
 
-	
-	public TaskLauncherProperties() {
-		try {
-			this.dataflowServerUri = new URI("http://localhost:9393");
-		} catch (URISyntaxException e) {
-			throw new IllegalStateException("Invalid Spring Cloud Data Flow Server URI", e);
-		}
+	public void setDataflowServerUri(String uri) {
+		this.dataflowServerUri = uri;
 	}
 	
 	public URI getDataflowServerUri() {
-		return dataflowServerUri;
+		try {
+			return new URI(this.dataflowServerUri);
+		} catch (URISyntaxException e) {
+			throw new IllegalStateException("Invalid Spring Cloud Data Flow Server URI", e);
+		}
 	}
 }

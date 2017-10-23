@@ -47,6 +47,11 @@
 			<artifactId>spring-cloud-dataflow-core</artifactId>
 			<version>${spring-cloud-dataflow.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream-test-support</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

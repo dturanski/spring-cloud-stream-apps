@@ -39,7 +39,7 @@ public class FileTaskLaunchRequestTransformer {
 	@Transformer(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)
 	public SimpleTaskLaunchRequest supplyFileName(String payload) {
 
-		return new SimpleTaskLaunchRequest(properties.getTaskName(), properties.getArgs(),
+		return new SimpleTaskLaunchRequest(payload, properties.getArgs(),
 				 Collections.singletonMap(
 						 String.join(".","app",properties.getTaskName(),"fileName"),
 						 payload));

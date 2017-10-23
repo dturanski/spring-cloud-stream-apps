@@ -1,10 +1,14 @@
 package org.spring.io;
 
+import static org.mockito.Mockito.verify;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.cloud.dataflow.rest.client.TaskOperations;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
@@ -19,7 +23,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TaskLauncherTests {
 	@Autowired
 	private MessageChannel input;
-	
+
+
+	@MockBean
+	private TaskOperations taskOperations;
+
+
 	@Autowired 
 	private ObjectMapper objectMapper;
 
@@ -27,6 +36,7 @@ public class TaskLauncherTests {
 	//TODO Mock TaskOperations
 	@Ignore
 	@Test public void testSimpleLaunch() throws JsonProcessingException {
+
 		SimpleTaskLaunchRequest request = new SimpleTaskLaunchRequest("hello-world-task",
 				null,
 				null);
@@ -35,6 +45,6 @@ public class TaskLauncherTests {
 				.setHeader(MessageHeaders.CONTENT_TYPE,"application/json")
 				.build();
 		input.send(message);
-		
+		verify(taskOperations.launch(request.getTaskName(), request.getProperties(), request.getArgs()));
 	}
 }
